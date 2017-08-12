@@ -1,6 +1,5 @@
 <?php
-// If it's going to need the database, then it's
-// probably smart to require it before we start.
+
 require_once(LIB_PATH.DS.'database.php');
 
 class Photograph {
@@ -104,9 +103,7 @@ class Photograph {
 	public function destroy() {
 		// First remove the database entry
 		if($this->delete()) {
-			// then remove the file
-		  // Note that even though the database entry is gone, this object
-			// is still around (which lets us use $this->image_path()).
+
 			$target_path = SITE_ROOT.DS.'public'.DS.$this->image_path();
 			return unlink($target_path) ? true : false;
 		} else {
@@ -168,12 +165,6 @@ class Photograph {
 	private static function instantiate($row) {
 		// Could check that $record exists and is an array
     $object = new self;
-		// Simple, long-form approach:
-		// $object->id 				= $record['id'];
-		// $object->username 	= $record['username'];
-		// $object->password 	= $record['password'];
-		// $object->first_name = $record['first_name'];
-		// $object->last_name 	= $record['last_name'];
 
 		// More dynamic, short-form approach:
 		foreach($row as $attribute=>$value){
@@ -212,17 +203,10 @@ class Photograph {
 	  return $clean_attributes;
 	}
 
-	// replaced with a custom save()
-	// public function save() {
-	//   // A new record won't have an id yet.
-	//   return isset($this->id) ? $this->update() : $this->create();
-	// }
 
 	public function create() {
 		global $database;
-		// Don't forget your SQL syntax and good habits:
-		// - INSERT INTO table (key, key) VALUES ('value', 'value')
-		// - single-quotes around all values
+
 		// - escape all values to prevent SQL injection
 		$attributes = $this->sanitized_attributes();
 	  $sql = "INSERT INTO ".self::$table_name." (";
@@ -240,9 +224,7 @@ class Photograph {
 
 	public function update() {
 	  global $database;
-		// Don't forget your SQL syntax and good habits:
-		// - UPDATE table SET key='value', key='value' WHERE condition
-		// - single-quotes around all values
+
 		// - escape all values to prevent SQL injection
 		$attributes = $this->sanitized_attributes();
 		$attribute_pairs = array();
@@ -258,8 +240,6 @@ class Photograph {
 
 	public function delete() {
 		global $database;
-		// Don't forget your SQL syntax and good habits:
-		// - DELETE FROM table WHERE condition LIMIT 1
 		// - escape all values to prevent SQL injection
 		// - use LIMIT 1
 	  $sql = "DELETE FROM ".self::$table_name;
@@ -269,11 +249,7 @@ class Photograph {
 	  return ($database->affected_rows() == 1) ? true : false;
 
 		// NB: After deleting, the instance of User still
-		// exists, even though the database entry does not.
-		// This can be useful, as in:
-		//   echo $user->first_name . " was deleted";
-		// but, for example, we can't call $user->update()
-		// after calling $user->delete().
+
 	}
 
 }

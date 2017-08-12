@@ -1,6 +1,5 @@
 <?php
-// If it's going to need the database, then it's
-// probably smart to require it before we start.
+
 require_once(LIB_PATH.DS.'database.php');
 
 class User {
@@ -66,12 +65,6 @@ class User {
 	private static function instantiate($record) {
 		// Could check that $record exists and is an array
     $object = new self;
-		// Simple, long-form approach:
-		// $object->id 				= $record['id'];
-		// $object->username 	= $record['username'];
-		// $object->password 	= $record['password'];
-		// $object->first_name = $record['first_name'];
-		// $object->last_name 	= $record['last_name'];
 
 		// More dynamic, short-form approach:
 		foreach($record as $attribute=>$value){
@@ -83,8 +76,7 @@ class User {
 	}
 
 	private function has_attribute($attribute) {
-	  // We don't care about the value, we just want to know if the key exists
-	  // Will return true or false
+
 	  return array_key_exists($attribute, $this->attributes());
 	}
 
@@ -117,9 +109,7 @@ class User {
 
 	public function create() {
 		global $database;
-		// Don't forget your SQL syntax and good habits:
-		// - INSERT INTO table (key, key) VALUES ('value', 'value')
-		// - single-quotes around all values
+
 		// - escape all values to prevent SQL injection
 		$attributes = $this->sanitized_attributes();
 	  $sql = "INSERT INTO ".self::$table_name." (";
@@ -137,9 +127,7 @@ class User {
 
 	public function update() {
 	  global $database;
-		// Don't forget your SQL syntax and good habits:
-		// - UPDATE table SET key='value', key='value' WHERE condition
-		// - single-quotes around all values
+
 		// - escape all values to prevent SQL injection
 		$attributes = $this->sanitized_attributes();
 		$attribute_pairs = array();
@@ -155,8 +143,6 @@ class User {
 
 	public function delete() {
 		global $database;
-		// Don't forget your SQL syntax and good habits:
-		// - DELETE FROM table WHERE condition LIMIT 1
 		// - escape all values to prevent SQL injection
 		// - use LIMIT 1
 	  $sql = "DELETE FROM ".self::$table_name;
@@ -166,11 +152,7 @@ class User {
 	  return ($database->affected_rows() == 1) ? true : false;
 
 		// NB: After deleting, the instance of User still
-		// exists, even though the database entry does not.
-		// This can be useful, as in:
-		//   echo $user->first_name . " was deleted";
-		// but, for example, we can't call $user->update()
-		// after calling $user->delete().
+
 	}
 
 }
