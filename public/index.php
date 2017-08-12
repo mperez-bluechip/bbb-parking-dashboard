@@ -8,7 +8,7 @@
 		<a href="photo.php?id=<?php echo $photo->id; ?>">
 			<img src="<?php echo $photo->image_path(); ?>" width="200" />
 		</a>
-    <p><?php echo $photo->caption; ?></p>
+    <p style="color: #ffffff;"><?php echo $photo->caption; ?></p>
   </div>
 <?php endforeach; ?>
 
