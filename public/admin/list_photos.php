@@ -6,7 +6,7 @@
 ?>
 <?php include_layout_template('admin_header.php'); ?>
 <a href="index.php">&larr;BACK</a>
-<h2 style=" width: 90%; color: #21b2a6; background: #ffffff; padding: 1% 1%;">Photographs</h2>
+<h2 style=" width: 90%; color: #21b2a6; background: #ffffff; padding: 1% 1%;">BBB Parking Spots</h2>
 
 <?php echo output_message($message); ?>
 <table class="bordered">
